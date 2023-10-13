@@ -1,0 +1,22 @@
+#! /bin/bash
+
+#JAVA-APP install
+amazon-linux-extras enable java-openjdk11
+yum clean metadata && yum -y install java-11-openjdk
+mkdir /home/ec2-user/app && cd /home/ec2-user/app
+wget https://github.com/stacksimplify/temp1/releases/download/1.0.0/usermgmt-webapp.war -P /home/ec2-user/app 
+export DB_HOSTNAME=${db_endpoint}
+export DB_PORT=${db_port}
+export DB_NAME=${db_name}
+export DB_USERNAME=${db_username}
+export DB_PASSWORD=${db_password}
+java -jar /home/ec2-user/app/usermgmt-webapp.war > /home/ec2-user/app/start.log &
+
+#install mysql client for troubleshooting to RDS
+rpm -e --nodeps mariadb-libs-*
+amazon-linux-extras enable mariadb10.5 && yum install -y mariadb
+mysql -V
+yum install -y telnet
+
+#Userdata troubleshooting:
+# /var/lib/cloud/instances/[instance-id]/user-data.txt or #/var/log/cloud-init-output.log

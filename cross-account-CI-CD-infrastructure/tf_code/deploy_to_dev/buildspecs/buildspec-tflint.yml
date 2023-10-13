@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    on-failure: ABORT       
+    commands:
+      - tflint --version
+
+  build:
+    on-failure: ABORT   
+    commands:
+      - cd "${CODEBUILD_SRC_DIR}/environments/dev"
+      - cat .tflint.hcl
+      - tflint --init
+      - tflint -f junit --force > tflint_report.xml && tflint
+
+  post_build:
+    on-failure: CONTINUE   
+    commands:
+      - echo "[Post Build]::Completed tflint on `date`"
+
+reports:
+  tflint:
+    base-directory: environments/dev
+    files:
+      - tflint_report.xml
+    file-format: "JUNITXML"
+
+
+    

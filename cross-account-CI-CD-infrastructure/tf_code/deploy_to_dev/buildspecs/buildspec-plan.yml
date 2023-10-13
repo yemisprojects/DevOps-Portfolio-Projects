@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    on-failure: ABORT 
+    commands:
+      - terraform --version      
+
+  build:
+    on-failure: ABORT   
+    commands:
+      - cd ${CODEBUILD_SRC_DIR}/environments/dev
+      - echo "[Build]::Started terraform init on `date`"
+      - terraform validate
+      - terraform plan -out=tfplan -input=false -no-color
+      
+  post_build:
+    on-failure: CONTINUE   
+    commands:
+      - echo "[Post Build]:Completed terraform execution on `date`"
+
+artifacts:
+  files:
+    - "**/*"
+    

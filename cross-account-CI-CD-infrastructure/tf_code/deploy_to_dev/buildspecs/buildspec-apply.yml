@@ -1,0 +1,26 @@
+version: 0.2
+env:
+  variables:
+    TF_COMMAND: "apply"
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    on-failure: ABORT       
+
+  build:
+    on-failure: ABORT   
+    commands:
+      - cd ${CODEBUILD_SRC_DIR}/environments/dev
+      - |
+        if [ $TF_COMMAND != "destroy" ] ; then
+          terraform $TF_COMMAND tfplan
+        elif [ $TF_COMMAND = "destroy" ] ; then
+          terraform $TF_COMMAND -auto-approve
+        fi
+      
+  post_build:
+    on-failure: CONTINUE   
+    commands:
+      - echo "[Post Build]::Completed terraform execution on `date`"

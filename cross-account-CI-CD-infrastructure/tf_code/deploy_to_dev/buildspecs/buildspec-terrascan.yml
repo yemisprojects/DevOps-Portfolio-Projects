@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    on-failure: ABORT       
+    commands:
+      - terrascan version
+      
+  build:
+    on-failure: ABORT   
+    commands:
+      - cd ${CODEBUILD_SRC_DIR}/environments/dev
+      - echo "[Build]::Started terrascan analysis on `date`"  
+      - terrascan scan -i terraform --non-recursive -o junit-xml > terrascan_results.xml || true
+      - terrascan scan -i terraform --non-recursive || true
+
+  post_build:
+    on-failure: CONTINUE   
+    commands:
+      - echo "[Post Build]::Completed terrascan analysis on `date`" 
+
+reports:
+  terrascan:
+    base-directory: environments/dev
+    file-format: "JUNITXML"
+    files:
+      - terrascan_results.xml
+    
+    
