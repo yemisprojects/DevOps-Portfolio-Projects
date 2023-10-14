@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    on-failure: ABORT   
+    commands:
+      - checkov -v
+
+  build:
+    commands:
+      - cd ${CODEBUILD_SRC_DIR}/environments/dev
+      - echo "[Build]::Starting checkov analysis at `date`"
+      - checkov --soft-fail -d . 
+      - checkov --soft-fail --output junitxml -d . > checkov_report.xml
+
+  post_build:
+    commands:
+      - echo "[Post Build]::Completed checkov analysis at `date`..."
+      
+reports:
+  checkov-report-group:
+    base-directory: environments/dev
+    files:
+      - 'checkov_report.xml'
+    file-format: "JUNITXML"

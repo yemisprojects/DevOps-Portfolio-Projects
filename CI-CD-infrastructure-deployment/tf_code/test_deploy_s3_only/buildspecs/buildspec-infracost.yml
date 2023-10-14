@@ -1,0 +1,30 @@
+version: 0.2
+env:
+  secrets-manager:
+    INFRACOST_API_KEY: "infracost_api_key20231009093715517600000001:api_key"
+  parameter-store:
+    BUCKET_NAME: "/infracost/cost-usage-report/bucket"
+
+phases:
+  install:
+    commands:
+      - terraform --version
+      - infracost -v
+
+  build:
+    commands:
+      - echo "[Build]::Starting Infracost on `date`"
+      - cd "$CODEBUILD_SRC_DIR/environments/dev" && infracost breakdown --path .
+      - terraform init --backend-config=backend.conf -input=false
+      - infracost breakdown --path . --format html > cost-report-$(date +%m-%d-%Y-%T).html
+      - "ls -l cost-repo* && aws s3 cp cost-report* s3://${BUCKET_NAME}"
+      - "mv cost-repo* $CODEBUILD_SRC_DIR/scripts/cost-report.html" 
+      - cd $CODEBUILD_SRC_DIR/scripts && python send_infracost_report_email.py
+
+  post_build:
+    commands:
+      - echo "[Post Build]::Costs breakdown completed on `date`"
+
+artifacts:
+  files:
+    - "**/*"
