@@ -1,0 +1,31 @@
+version: 0.2
+env:
+  variables:
+    TERRAFORM_VERSION: "1.3.7"
+  parameter-store:
+   ASSESSMENT_TEMPLATE_ARN: "/codebuild/awsinspector/template_arn"
+   ASSESSMENT_TARGET_ARN: "/codebuild/awsinspector/target_arn"
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    on-failure: ABORT       
+    commands:
+      - cd /tmp && curl -sS -O https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+      - unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/bin
+      - terraform --version
+
+  build:
+    on-failure: ABORT   
+    commands:
+      - cd "$CODEBUILD_SRC_DIR/terraform_manifests" && ls -al
+      - terraform apply -auto-approve -input=false
+      - cd "$CODEBUILD_SRC_DIR/scripts"
+      - bash vulnerability_scan.sh
+      - export AMI_ID=$(cat $CODEBUILD_SRC_DIR/packer_manifests/manifest.json| jq -r '.builds[0].artifact_id'| cut -f 2 -d ":")
+      - python send_findings_report_email.py
+
+artifacts:
+  files:
+    - '**/*'

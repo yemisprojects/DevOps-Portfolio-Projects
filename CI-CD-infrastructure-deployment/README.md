@@ -1,6 +1,6 @@
 <h2 align="center">AWS Cross account Infrastructure Deployment Pipeline</h2>
 
-![Pipeline Architecture](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/Architecture.png)
+![Pipeline Architecture](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/CI-CD-infrastructure-deployment/Images/Architecture.png)
 <h4 align="center"></h4>
 
 <h2 align="center">Project Summary</h2>
@@ -15,7 +15,7 @@ The pipeline consists of 5 stages in addition to the source stage.
 
 
 ## 3-tier webapp architecture deployed via pipeline
-![3-tier webapp architecture](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/3tier-webapp-architecture.png)
+![3-tier webapp architecture](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/CI-CD-infrastructure-deployment/Images/3tier-webapp-architecture.png)
 <h4 align="center"></h4>
 
 ## Deployment Pre-requisites
@@ -30,21 +30,21 @@ The pipeline consists of 5 stages in addition to the source stage.
 ## Deployment Steps
 See my free [medium blog post](link) for step by step guide. Below, is an image of the deployed pipeline.
 
-![stage 1 -3](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/Pipeline%20stage%201-3.png)
-![stage 4 -6](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/Pipeline%20stage%204-6.png)
+![stage 1 -3](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/CI-CD-infrastructure-deployment/Images/Pipeline%20stage%201-3.png)
+![stage 4 -6](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/CI-CD-infrastructure-deployment/Images/Pipeline%20stage%204-6.png)
 
 ## Pipeline features
 - <h4>Slack notifications</h4>
 You will receive Slack notifications once the pipeline is triggered, and receive requests for manual approval or pipeline execution completes.
 
-![Slack notifications](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/Slack%20notifications.png)
+![Slack notifications](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/CI-CD-infrastructure-deployment/Images/Slack%20notifications.png)
 
 - <h4>Test reports</h4>
 Each CodeBuild project generates test reports. For example, the screenshot below shows a summary of the success rate of test cases for the security scans run by Checkov.
 
-![Checkov summary report](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/Checkov%20report%20summary.png)
+![Checkov summary report](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/CI-CD-infrastructure-deployment/Images/Checkov%20report%20summary.png)
 
 - <h4>Infrastructure Cost estimations</h4>
-Last but not least my favorite, the pipeline generates the snippet cost report shown below using Infracost. You can view the full report [here](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/report%20samples/cost%20report.pdf)
+Last but not least my favorite, the pipeline generates the snippet cost report shown below using Infracost. You can view the full report [here](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/CI-CD-infrastructure-deployment/report%20samples/cost%20report.pdf)
 
-![Infracost report](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/cost%20report.png)
+![Infracost report](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/CI-CD-infrastructure-deployment/Images/cost%20report.png)

@@ -1,0 +1,62 @@
+schemaVersion: "0.3"
+description: |
+  ### Document Name - ConfigRemediation-EnableSQSEncryptionWithKMS
+
+  ## What does this document do?
+  This runbook encrypts an AWS SQS Queue using the AWS Key Management Service (AWS KMS) customer master key (CMK) you specify. This runbook should only be used as a baseline to ensure that your SQS Queues are encrypted according to minimum recommended security best practices. We recommend encrypting multiple Queues with different CMKs. 
+
+  ## Input Parameters
+  * QueueUrl: (Required) The ARN or name of the trail you want to update to be encrypted.
+  * KmsKeyId: (Required) The ARN, key ID, or the key alias of the of the CMK you want to use to encrypt the trail you specify in the QueueUrl parameter.
+  * AutomationAssumeRole: (Required) The Amazon Resource Name (ARN) of the AWS Identity and Access Management (IAM) role that allows Systems Manager Automation to perform the actions on your behalf.
+assumeRole: "{{ AutomationAssumeRole }}"
+parameters:
+  QueueUrl:
+    type: String
+    description: (Required) The URL of the queue you want to update to be encrypted.
+  KmsKeyId:
+    description: (Required) The ARN, key ID, or the key alias of the of the CMK you want to use to encrypt the queue you specify in the QueueUrl parameter.
+    type: String
+    allowedPattern: (^arn:(aws[a-z-]*)?:kms:.*:\d{12}:alias/[a-zA-Z0-9/_-]{1,256}$)|(^alias/[a-zA-Z0-9/_-]{1,256}$)|(^arn:(aws[a-z-]*)?:kms:.*:\d{12}:key/[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}$)|(^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}$)
+  AutomationAssumeRole:
+    description: (Required) The Amazon Resource Name (ARN) of the AWS Identity and Access Management (IAM) role that allows Systems Manager Automation to perform the actions on your behalf.
+    type: String
+    allowedPattern: ^arn:(aws[a-zA-Z-]*)?:iam::\d{12}:role/[\w+=,.@-]+
+
+mainSteps:
+  - name: EnableKMSKeyEncryption
+    action: aws:executeAwsApi
+    isCritical: true
+    onFailure: step:SendRemediationFailure
+    isEnd: true
+    maxAttempts: 2
+    timeoutSeconds: 5
+    description: |
+      ## EnableKMSKeyEncryption
+      Enables encryption on the sqs queue you specify in the QueueUrl parameter.
+    inputs:
+      Service: sqs
+      Api: SetQueueAttributes
+      QueueUrl: "{{ QueueUrl }}"
+      Attributes:
+        KmsMasterKeyId: "{{ KmsKeyId }}"
+
+  - name: SendRemediationFailure
+    action: aws:executeAwsApi
+    isCritical: false
+    onFailure: Abort
+    maxAttempts: 2
+    isEnd: true
+    timeoutSeconds: 5
+    description: |
+      ## SendRemediationFailure
+      Sends Email regarding Failed Remediation.
+    inputs:
+      Service: sns
+      Api: Publish
+      Subject: SQS Queue Remediation failed
+      TopicArn: ${sns_topic_arn}
+      Message: |
+        Failed to remediate SQS Queue: "{{ QueueUrl }}"
+        Automation Execution ID: "{{ automation:EXECUTION_ID }}"
+        Config Rule Name: ${config_rule_name}

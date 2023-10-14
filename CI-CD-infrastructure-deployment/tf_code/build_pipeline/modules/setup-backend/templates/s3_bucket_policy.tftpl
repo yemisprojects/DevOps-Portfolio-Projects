@@ -1,0 +1,46 @@
+{
+       "Version": "2012-10-17",
+       "Id": "PutObjectPolicy",
+       "Statement": [
+           {
+                "Sid": "DenyIncorrectEncryptionHeader",
+                "Effect": "Deny",
+                "Principal": "*",
+                "Action": "s3:PutObject",
+                "Resource": "arn:aws:s3:::${bucket_name}/*",
+                "Condition": {
+                    "StringNotEquals": {
+                          "s3:x-amz-server-side-encryption": ["aws:kms","AES256"]
+                             }
+                   }
+           },
+           {
+                "Sid": "DenyUnEncryptedObjectUploads",
+                "Effect": "Deny",
+                "Principal": "*",
+                "Action": "s3:PutObject",
+                "Resource": "arn:aws:s3:::${bucket_name}/*",
+                "Condition": {
+                    "Null": {
+                          "s3:x-amz-server-side-encryption": true
+                            }
+                    }
+           },
+           {
+            "Sid": "AllowSSLRequestsOnly",
+            "Action": "s3:*",
+            "Effect": "Deny",
+            "Resource": [
+              "arn:aws:s3:::${bucket_name}",
+              "arn:aws:s3:::${bucket_name}/*"
+            ],
+            "Condition": {
+              "Bool": {
+                "aws:SecureTransport": "false"
+              }
+            },
+            "Principal": "*"
+          }
+      
+    ]
+}

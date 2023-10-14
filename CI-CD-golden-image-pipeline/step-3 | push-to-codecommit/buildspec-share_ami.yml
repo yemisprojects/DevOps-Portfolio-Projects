@@ -1,0 +1,32 @@
+version: 0.2
+env:
+  variables:
+    TERRAFORM_VERSION: "1.3.7"
+
+phases:
+  install:
+    on-failure: ABORT       
+    commands:
+      - cd /tmp && curl -sS -O https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+      - unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/bin
+      - terraform --version 
+
+  build:
+    on-failure: ABORT   
+    commands:
+      - cd "$CODEBUILD_SRC_DIR/packer_manifests" && ls -al
+      - cat manifest.json
+      - AMI_ID=$(cat manifest.json| jq -r '.builds[0].artifact_id'| cut -f 2 -d ":")
+      - echo "AMI_id $AMI_ID will be shared"
+      - account_list=$(cat "files/account_list.txt")
+      - | 
+        for act in $account_list; do 
+            aws ec2 modify-image-attribute --image-id "$AMI_ID" --region us-east-1 --launch-permission "Add=[{UserId=$act}]"
+            echo "Shared $AMI_ID with account $act"
+        done
+      # - cd "$CODEBUILD_SRC_DIR/terraform_manifests" && ls -al
+      # - terraform destroy -auto-approve -input=false
+
+artifacts:
+  files:
+    - '**/*'

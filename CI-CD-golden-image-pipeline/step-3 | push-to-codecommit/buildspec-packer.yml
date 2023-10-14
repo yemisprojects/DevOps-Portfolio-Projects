@@ -1,0 +1,32 @@
+version: 0.2
+env:
+  variables:
+    PACKER_VERSION: "1.8.5"
+    TERRAFORM_VERSION: "1.3.7"
+
+phases:
+  install:
+    on-failure: ABORT 
+    commands:
+      - wget -q https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip -P /tmp
+      - unzip /tmp/packer_${PACKER_VERSION}_linux_amd64.zip -d /usr/local/bin
+      - packer --version && cd /tmp
+      - curl -sS -O https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+      - unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/bin
+      - terraform --version
+
+  build:
+    on-failure: ABORT 
+    commands:
+      - cd "$CODEBUILD_SRC_DIR/terraform_manifests" && ls -al 
+      - terraform init --backend-config=backend.conf -input=false
+      - terraform validate && terraform plan -no-color | tee "tfplan-$(date +%m-%d-%Y-%T).txt"
+      - terraform apply -auto-approve -input=false -target module.vpc
+      - cd "$CODEBUILD_SRC_DIR/packer_manifests" && ls -al
+      - packer init .
+      - packer validate .
+      - packer build .
+
+artifacts:
+  files:
+    - '**/*'
