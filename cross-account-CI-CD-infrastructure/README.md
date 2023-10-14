@@ -45,7 +45,3 @@ Each CodeBuild project generates test reports. For example, the screenshot below
 Last but not least my favorite, the pipeline generates the snippet cost report shown below using Infracost. You can view the full report [here](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/report%20samples/cost%20report.pdf)
 
 ![Infracost report](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/cost%20report.png)
-
-## Blog Post
-
-[![Image](https://github.com/yemisprojects/golden-image-pipeline/blob/main/images/Published_post_snippet.png "Image pipeline with Packer, AWS CodePipeline, and AWS Inspector")](https://yemiodunade.medium.com/image-pipeline-with-packer-aws-codepipeline-and-aws-inspector-9e6e5dfafc83?sk=d3d30a80e3b72b02475451664023f352)
