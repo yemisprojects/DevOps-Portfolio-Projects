@@ -26,7 +26,7 @@ The pipeline consists of 5 stages in addition to the source stage.
 - Registered domain name
 
 ## Deployment Steps
-See my free [medium blog post]() for a step by step guide. Below, is an image of the deployed pipeline.
+See my free [medium blog post](https://yemiodunade.medium.com/aws-cross-account-infrastructure-deployment-pipeline-with-terraform-c931c5ed1a9f?source=friends_link&sk=808cdc2ef800db88ae29ade447f774b6) for a step by step guide. Below, is an image of the deployed pipeline.
 
 ![stage 1 -3](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/CI-CD-infrastructure-deployment/Images/Pipeline%20stage%201-3.png)
 ![stage 4 -6](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/CI-CD-infrastructure-deployment/Images/Pipeline%20stage%204-6.png)
