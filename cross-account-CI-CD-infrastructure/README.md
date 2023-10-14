@@ -31,7 +31,7 @@ The pipeline consists of 5 stages in addition to the source stage.
 See my free [medium blog post](link) for step by step guide
 
 ## Pipeline features
-- Slack notifications
+-  <h5 align="center">Slack notifications</h5>
 You will receive Slack notifications once the pipeline is triggered, and receive requests for manual approval or pipeline execution completes.
 ![Slack notifications](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/Slack%20notifications.png)
 
