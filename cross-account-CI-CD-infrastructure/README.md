@@ -15,8 +15,8 @@ The pipeline consists of 5 stages in addition to the source stage.
 
 
 ## 3-tier webapp architecture deployed via pipeline
-
-
+![3-tier webapp architecture](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/3tier-webapp-architecture.png)
+<h4 align="center"></h4>
 
 ## Deployment Pre-requisites
 - Knowledge of Terraform, AWS, Python, Docker, Shell scripting
