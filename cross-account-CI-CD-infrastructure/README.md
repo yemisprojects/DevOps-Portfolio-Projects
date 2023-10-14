@@ -36,12 +36,12 @@ You will receive Slack notifications once the pipeline is triggered, and receive
 
 ![Slack notifications](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/Slack%20notifications.png)
 
-- Test reports 
+- <h4>Test reports</h4>
 Each CodeBuild project generates test reports. For example, the screenshot below shows a summary of the success rate of test cases for the security scans run by Checkov.
 
 ![Checkov summary report](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/Checkov%20report%20summary.png)
 
-- Infrastructure Cost reports
+- <h4>Infrastructure Cost estimations</h4>
 Last but not least my favorite, the pipeline generates the snippet cost report shown below using Infracost. You can view the full report here
 
 ![Infracost report](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/cost%20report.png)
