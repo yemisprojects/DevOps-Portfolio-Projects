@@ -11,8 +11,7 @@ The pipeline consists of 5 stages in addition to the source stage.
 - Cost Estimation stage: An estimate of the cost of the resource to be deployed is done using Infracost, one of my favorite IaC tools. It can also be used to deduce a cost estimate of the change to be made to the environment. A report is emailed to subscribers and backed up to S3.
 - Planning stage: Here a terraform plan of the infrastructure change is generated and stored as an artifact to be used at a later stage.
 - Manual approval stage: For critical infrastructure a manual approval stage should be included for a careful review before making changes to your environment. The reviewer will receive an email notification for the approval
-- Deployment stage: The reviewed plan is deployed to the target account after approval. The sample infrastructure deployed in this post is the classic 3-tier architecture below.  
-
+- Deployment stage: The reviewed plan is deployed to the target account after approval. The sample infrastructure deployed is the classic 3-tier architecture below.  
 
 ## 3-tier webapp architecture deployed via pipeline
 ![3-tier webapp architecture](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/CI-CD-infrastructure-deployment/Images/3tier-webapp-architecture.png)
@@ -22,9 +21,8 @@ The pipeline consists of 5 stages in addition to the source stage.
 - Knowledge of Terraform, AWS, Python, Docker, Shell scripting
 - Docker, Infracost ( v0.10.29) and Terraform (1.6.1) installed (1.6.0 crashes)
 - Two AWS accounts and an IAM user with admin permissions.
-- AWS CLI (2.2+) installed and configured for both accounts
-- Access to the project files on my GitHub repo
-- Email address for pipeline notifications
+- AWS CLI (2.2+) installed and configured with access keys for both accounts
+- Email address & Slack channel for pipeline notifications
 - Registered domain name
 
 ## Deployment Steps
