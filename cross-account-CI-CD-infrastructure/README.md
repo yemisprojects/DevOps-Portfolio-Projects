@@ -28,7 +28,10 @@ The pipeline consists of 5 stages in addition to the source stage.
 - Registered domain name
 
 ## Deployment Steps
-See my free [medium blog post](link) for step by step guide
+See my free [medium blog post](link) for step by step guide. Below, is an image of the deployed pipeline.
+
+![stage 1 -3](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/Pipeline%20stage%201-3.png)
+![stage 4 -6](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/Pipeline%20stage%204-6.png)
 
 ## Pipeline features
 - <h4>Slack notifications</h4>
