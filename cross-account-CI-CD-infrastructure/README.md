@@ -42,7 +42,7 @@ Each CodeBuild project generates test reports. For example, the screenshot below
 ![Checkov summary report](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/Checkov%20report%20summary.png)
 
 - <h4>Infrastructure Cost estimations</h4>
-Last but not least my favorite, the pipeline generates the snippet cost report shown below using Infracost. You can view the full report here
+Last but not least my favorite, the pipeline generates the snippet cost report shown below using Infracost. You can view the full report [here](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/report%20samples/cost%20report.pdf)
 
 ![Infracost report](https://github.com/yemisprojects/DevOps-Portfolio-Projects/blob/main/cross-account-CI-CD-infrastructure/Images/cost%20report.png)
 
